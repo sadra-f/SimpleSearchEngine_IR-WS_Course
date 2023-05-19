@@ -1,5 +1,5 @@
-from  InvertedIndex import InvertedIndex as IX
-from SimpleSearch import SimpleSearch as Searcher
+from  part1.InvertedIndex import InvertedIndex as IX
+from part1.SimpleSearch import SimpleSearch as Searcher
 import os
 
 def main():
