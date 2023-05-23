@@ -1,7 +1,8 @@
 #todo regex seperate by .I \d{0,4}
 from statics.Paths import DATASET_PATH, QUERY_PATH
 import re
-from models.DSR import DSR
+from models.DSR import DatasetRecord as DSR
+from models.QR  import QueryRecord as QR
 
 class Reader:
     ID_PATTERN = "^[.]I \d{1,4}$"
@@ -15,9 +16,9 @@ class Reader:
         self.QUERY_PATH = QUERY_PATH
     
     def read_dataset(self):
-        return self._read_data_file(self.DATA_SET_PATH)
+        return self._read_file(self.DATA_SET_PATH, True)
 
-    def _read_data_file(self, path) -> str:
+    def _read_file(self, path, is_dataset) -> str:
         result = []
         record_counter = -1
         with open(path, 'r') as file:
@@ -25,7 +26,10 @@ class Reader:
             for line in file:
                 if re.search(Reader.ID_PATTERN, line) is not None:
                     values = line.split(' ')
-                    result.append(DSR(values[1].strip()))
+                    if is_dataset:
+                        result.append(DSR(values[1].strip()))
+                    else:
+                        result.append(QR(values[1].strip()))
                     record_counter += 1
                     in_w = False
                 if in_w:
@@ -40,4 +44,5 @@ class Reader:
                     in_w = True
         return result
 
-    
+    def read_queries(self):
+        return self._read_file(self.QUERY_PATH, False)
