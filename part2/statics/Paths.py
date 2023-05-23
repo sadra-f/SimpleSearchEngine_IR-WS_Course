@@ -13,8 +13,8 @@ RELEVANCE_PATH_STR = 'part2/data/cranqrel'
 
 #==============================================================================
 
-DATASET_PATH = Path(DATASET_LOCAL_PATH_STR)
+DATASET_PATH = Path(DATASET_PATH_STR)
 
-DATASET_PATH = Path(QUERY_LOCAL_PATH_STR)
+QUERY_PATH = Path(QUERY_LOCAL_PATH_STR)
 
-DATASET_PATH = Path(RELEVANCE_LOCAL_PATH_STR)
+RELEVANCE_PATH = Path(RELEVANCE_LOCAL_PATH_STR)
