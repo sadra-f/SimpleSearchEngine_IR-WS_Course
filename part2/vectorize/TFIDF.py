@@ -5,16 +5,15 @@ from math import log10
 
 class TFIDF:
      
-    def __init__(self, inp_strings, test_strings):
+    def __init__(self, inp_strings):
         self.inp_strings = TFIDF.preprocess(inp_strings)
-        self.test_strings = TFIDF.preprocess(test_strings)
 
         self.inp_terms = TFIDF.extract_terms(self.inp_strings)
-        self.test_terms = TFIDF.extract_terms(self.test_strings)
 
         self.tf = TFIDF.TF(self.inp_strings, self.inp_terms).tf
         self.idf = TFIDF.IDF(self.inp_strings, self.inp_terms).idf
         self.tfidf = ndarray((len(self.inp_terms),len(self.inp_strings)))
+        
         self.calc_tfidf()
         return
         
