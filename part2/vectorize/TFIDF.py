@@ -1,4 +1,6 @@
 from numpy import ndarray
+import numpy as np
+from numpy import dot
 import re
 from statics.stopwords import STOPWORDS
 from math import log10
@@ -21,17 +23,14 @@ class TFIDF:
         self.tfidf = ndarray((len(self.all_terms),len(self.all_strings)))
 
         self.calc_tfidf()
-
-        
         return
         
     def preprocess(inp_list):
         for i in range(len(inp_list)):
             inp_list[i] = re.subn("([.]$)|( [.] )", " ", inp_list[i])[0]
-            inp_list[i] = re.subn("[(]|[)]|[/]|[']|[*]|[+]|[],]|[-]|[--]", "", inp_list[i])[0]
+            inp_list[i] = re.subn("[(]|[)]|[/]|[']|[*]|[+]|[],]|[-]|[--]|[?]", "", inp_list[i])[0]
         return inp_list
-            
-            
+               
     def extract_terms(string_list:list[str], remove_stopwords=True):
         tmp = []
         result = []
@@ -57,7 +56,20 @@ class TFIDF:
             for j in range(len(self.tf[i])):
                 self.tfidf[i][j] = self.tf[i][j] * self.idf[i]
 
+    def vector_length(vector:ndarray):
+        return np.sqrt(vector.dot(vector))
 
+    def cosine_similarity(vector1:ndarray, vector2:ndarray):
+        return dot(vector1, vector2) / ( TFIDF.vector_length(vector1) * TFIDF.vector_length(vector2) )
+
+    def calc_cosine_similarity(self):
+        result = []
+        for i in range(len(self.query_strings)):
+            result.append([])
+            for j in range(len(self.inp_strings)):
+                result[i].append(TFIDF.cosine_similarity(self.tfidf.take(i+len(self.inp_strings),1), self.tfidf.take(j,1)))
+        return result
+                
 
     class TF:
         def __init__(self, strings:list[str], terms:list[str]=None):
