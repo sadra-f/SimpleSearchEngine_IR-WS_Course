@@ -3,11 +3,10 @@ from vectorize.TFIDF import TFIDF
 
 rds = Reader()
 
-dataset = rds.read_dataset()
-query = rds.read_queries()
+inp = rds.read_dataset()
+test = rds.read_queries()
 
-inp_model = TFIDF([dataset[i].text for i in range(len(dataset))])
-query_model = TFIDF([query[i].text for i in range(len(query))])
+model = TFIDF([inp[i].text for i in range(len(inp))], [test[i].text for i in range(len(test))])
 
 print("Test")
 
