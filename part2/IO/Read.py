@@ -1,4 +1,4 @@
-#todo regex seperate by .I \d{0,4}
+
 from statics.Paths import DATASET_PATH, QUERY_PATH
 import re
 from models.DSR import DatasetRecord as DSR
