@@ -8,5 +8,6 @@ test = rds.read_queries()
 
 model = TFIDF([inp[i].text for i in range(len(inp))], [test[i].text for i in range(len(test))])
 
+
 print("Test")
 
