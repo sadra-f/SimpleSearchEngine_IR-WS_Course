@@ -1,8 +1,8 @@
 
-from statics.Paths import DATASET_PATH, QUERY_PATH
 import re
 from models.DSR import DatasetRecord as DSR
 from models.QR  import QueryRecord as QR
+from models.RRR  import RelevanceResultRecord as RRR
 
 class Reader:
     ID_PATTERN = "^[.]I \d{1,4}$"
@@ -11,7 +11,7 @@ class Reader:
     B_PATTERN = "^[.]B$"
     W_PATTERN = "^[.]W$"
 
-    def __init__(self):
+    def __init__(self, DATASET_PATH, QUERY_PATH):
         self.DATA_SET_PATH = DATASET_PATH
         self.QUERY_PATH = QUERY_PATH
     
@@ -46,3 +46,15 @@ class Reader:
 
     def read_queries(self):
         return self._read_file(self.QUERY_PATH, False)
+    
+    class ResultReader:
+        def __init__(self, RELEVANCE_PATH):
+            self.RELEVANCE_PATH = RELEVANCE_PATH
+
+        def read_results(self):
+            results = []
+            with open(self.RELEVANCE_PATH, 'r') as file:
+                for line in file:
+                    values = line.strip().split(' ')
+                    results.append(RRR(values[0], values[1], values[2]))
+            return results
