@@ -68,7 +68,7 @@ class TFIDF:
             result.append([])
             for j in range(len(self.inp_strings)):
                 result[i].append(TFIDF.cosine_similarity(self.tfidf.take(i+len(self.inp_strings),1), self.tfidf.take(j,1)))
-        return result
+        return np.asarray(result)
                 
 
     class TF:
